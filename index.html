@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -14,128 +14,219 @@ box-sizing:border-box;
 
 body{
 overflow:hidden;
-background:linear-gradient(to bottom,#020111,#191970);
+height:100vh;
 font-family:'Segoe UI',sans-serif;
 color:white;
-height:100vh;
+background:radial-gradient(circle at top,#1b1b4f,#020111);
 }
 
+/* estrellas */
 .star{
 position:absolute;
 width:2px;
 height:2px;
 background:white;
 border-radius:50%;
-animation:brillar 2s infinite alternate;
+animation:twinkle 2s infinite alternate;
+opacity:.7;
 }
 
-@keyframes brillar{
-from{opacity:.2}
-to{opacity:1}
+@keyframes twinkle{
+from{transform:scale(1); opacity:.3;}
+to{transform:scale(1.8); opacity:1;}
 }
 
+/* luna */
 .luna{
 position:absolute;
-top:60px;
-right:120px;
+top:50px;
+right:100px;
 width:120px;
 height:120px;
 background:#fff;
 border-radius:50%;
-box-shadow:0 0 60px white;
+box-shadow:0 0 80px white;
 }
 
-.contenedor{
+/* contenedores */
+.scene{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 text-align:center;
+width:90%;
+opacity:0;
+pointer-events:none;
+transition:opacity 1.5s ease;
 }
 
-h1{
-font-size:60px;
-margin-bottom:20px;
-animation:aparecer 2s;
+.scene.active{
+opacity:1;
+pointer-events:auto;
 }
 
-h2{
-font-size:30px;
-color:#ffd1dc;
-}
+/* textos */
+h1{font-size:52px;}
+h2{font-size:22px;color:#ffd1dc;margin-top:10px;}
 
 #texto{
-margin-top:40px;
-font-size:25px;
+margin-top:25px;
+font-size:22px;
 min-height:60px;
 }
 
+/* botones */
 button{
-margin-top:40px;
-padding:15px 40px;
+padding:12px 30px;
 border:none;
-border-radius:50px;
-font-size:20px;
+border-radius:40px;
+font-size:18px;
+cursor:pointer;
+transition:.3s;
+margin-top:20px;
+}
+
+#continuar, #si{
 background:#ff4d88;
 color:white;
-cursor:pointer;
-transition:.4s;
 }
 
-button:hover{
-transform:scale(1.1);
+#no{
+background:#444;
+color:white;
+position:absolute;
 }
 
-@keyframes aparecer{
-from{
-opacity:0;
-transform:translateY(-50px);
+/* escena final */
+#finalText{
+display:none;
+font-size:30px;
+margin-top:20px;
+color:#ffb6c1;
+animation:pop 1.5s ease;
 }
-to{
-opacity:1;
-transform:translateY(0);
+
+@keyframes pop{
+from{transform:scale(.5); opacity:0;}
+to{transform:scale(1); opacity:1;}
 }
+
+/* corazones */
+.heart{
+position:absolute;
+color:pink;
+font-size:20px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+from{transform:translateY(-10vh); opacity:1;}
+to{transform:translateY(110vh); opacity:0;}
+}
+
+/* zoom efecto */
+.zoom{
+animation:zoomIn 2s forwards;
+}
+
+@keyframes zoomIn{
+from{transform:translate(-50%,-50%) scale(1);}
+to{transform:translate(-50%,-50%) scale(1.2);}
 }
 </style>
 </head>
+
 <body>
 
 <div class="luna"></div>
 
-<div class="contenedor">
+<!-- ESCENA 1 -->
+<div class="scene active" id="scene1">
 <h1>Hola, amor ❤️</h1>
-
 <h2>Atziri Danae Garduño Caballero</h2>
-
 <div id="texto"></div>
+<button id="continuar">Continuar ✨</button>
+</div>
 
-<button>Continuar ✨</button>
+<!-- ESCENA 2 -->
+<div class="scene" id="scene2">
+<h1>Atziri ❤️</h1>
+<h2>Hay algo que quiero preguntarte...</h2>
+
+<div id="finalText">Quiero casarme contigo 💍❤️</div>
+
+<button id="si">Sí 💍</button>
+<button id="no">No 💔</button>
 </div>
 
 <script>
 
-// estrellas
-for(let i=0;i<300;i++){
-let star=document.createElement("div");
-star.className="star";
-star.style.left=Math.random()*100+"vw";
-star.style.top=Math.random()*100+"vh";
-document.body.appendChild(star);
+/* estrellas */
+for(let i=0;i<350;i++){
+let s=document.createElement("div");
+s.className="star";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
 }
 
-// texto escribiéndose
-const mensaje="Quiero mostrarte algo muy especial...";
+/* texto escena 1 */
+const msg="Quiero mostrarte algo muy especial...";
 let i=0;
 
 function escribir(){
-if(i<mensaje.length){
-document.getElementById("texto").innerHTML+=mensaje.charAt(i);
+if(i<msg.length){
+document.getElementById("texto").innerHTML+=msg.charAt(i);
 i++;
-setTimeout(escribir,80);
+setTimeout(escribir,70);
+}
+}
+escribir();
+
+/* cambio de escena */
+document.getElementById("continuar").addEventListener("click", ()=>{
+document.getElementById("scene1").classList.remove("active");
+document.getElementById("scene2").classList.add("active");
+});
+
+/* botón NO que huye */
+const noBtn = document.getElementById("no");
+
+noBtn.addEventListener("mouseover", ()=>{
+noBtn.style.left = Math.random()*80 + "vw";
+noBtn.style.top = Math.random()*80 + "vh";
+});
+
+/* corazones lluvia */
+function lluviaCorazones(){
+for(let i=0;i<40;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(2+Math.random()*3)+"s";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),5000);
 }
 }
 
-escribir();
+/* botón SI */
+document.getElementById("si").addEventListener("click", ()=>{
+
+document.getElementById("finalText").style.display="block";
+
+/* zoom cinematográfico */
+document.getElementById("scene2").classList.add("zoom");
+
+/* lluvia de corazones */
+setInterval(lluviaCorazones,800);
+
+/* esconder botones */
+document.getElementById("si").style.display="none";
+document.getElementById("no").style.display="none";
+});
 
 </script>
 
