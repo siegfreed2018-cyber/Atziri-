@@ -38,16 +38,16 @@ from{transform:scale(1); opacity:.3;}
 to{transform:scale(1.8); opacity:1;}
 }
 
-/* luna */
-.luna{
+/* cielo nombre */
+.sky-name{
 position:absolute;
-top:50px;
-right:80px;
-width:120px;
-height:120px;
-background:#fff;
-border-radius:50%;
-box-shadow:0 0 80px white;
+top:20px;
+width:100%;
+text-align:center;
+font-family:'Great Vibes', cursive;
+font-size:28px;
+color:#ffd1dc;
+text-shadow:0 0 15px #ff4d88;
 }
 
 /* escenas */
@@ -60,7 +60,7 @@ text-align:center;
 width:90%;
 opacity:0;
 pointer-events:none;
-transition:opacity 1.5s ease;
+transition:opacity 1.2s ease;
 }
 
 .scene.active{
@@ -68,8 +68,8 @@ opacity:1;
 pointer-events:auto;
 }
 
-/* textos elegantes */
-h1,h2,#finalText{
+/* textos */
+h1,h2,#finalText,#extraText{
 font-family:'Great Vibes', cursive;
 text-align:center;
 }
@@ -81,6 +81,13 @@ h2{font-size:30px;color:#ffd1dc;margin-top:10px;}
 font-size:36px;
 margin-top:20px;
 display:none;
+}
+
+#extraText{
+font-size:30px;
+margin-top:15px;
+display:none;
+color:#ffb6c1;
 }
 
 /* botones */
@@ -125,7 +132,7 @@ from{transform:translateY(-10vh) rotate(0deg); opacity:1;}
 to{transform:translateY(110vh) rotate(180deg); opacity:0;}
 }
 
-/* zoom final */
+/* zoom */
 .zoom{
 animation:zoomIn 2s forwards;
 }
@@ -140,7 +147,7 @@ to{transform:translate(-50%,-50%) scale(1.15);}
 
 <body>
 
-<div class="luna"></div>
+<div class="sky-name">Atziri ❤️ Tú</div>
 
 <script>
 // estrellas
@@ -173,6 +180,7 @@ document.body.appendChild(s);
 <h2>¿Quieres casarte conmigo? 💍</h2>
 
 <div id="finalText">Quiero casarme contigo ❤️💍</div>
+<div id="extraText">Sabía que querías 🤣</div>
 
 <button id="si">Sí 💍</button>
 <button id="no">No 💔</button>
@@ -180,7 +188,7 @@ document.body.appendChild(s);
 
 <script>
 
-/* texto escena 1 */
+/* texto intro */
 const msg="Quiero mostrarte algo muy especial...";
 let i=0;
 
@@ -199,28 +207,33 @@ document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 }
 
-/* continuar */
 document.getElementById("continuar").addEventListener("click", ()=>{
 showScene("scene2");
 });
 
-/* continuar 2 */
 document.getElementById("continuar2").addEventListener("click", ()=>{
 showScene("scene3");
 });
 
-/* NO que huye */
+/* NO que huye + hace crecer SI */
 const noBtn = document.getElementById("no");
+const siBtn = document.getElementById("si");
 
 noBtn.addEventListener("mouseover", ()=>{
+
 noBtn.style.left = Math.random()*80 + "vw";
 noBtn.style.top = Math.random()*80 + "vh";
+
+/* el SI crece */
+let size = parseFloat(window.getComputedStyle(siBtn).fontSize);
+siBtn.style.fontSize = (size + 1) + "px";
+siBtn.style.transform = "scale(1.05)";
 });
 
-/* CORAZONES + GIRASOLES */
-function lluviaRomantica(){
+/* lluvia romántica */
+function lluvia(){
 
-for(let i=0;i<12;i++){
+for(let i=0;i<10;i++){
 let h=document.createElement("div");
 h.className="heart";
 h.innerHTML="❤️";
@@ -230,7 +243,7 @@ document.body.appendChild(h);
 setTimeout(()=>h.remove(),5000);
 }
 
-for(let i=0;i<6;i++){
+for(let i=0;i<5;i++){
 let s=document.createElement("div");
 s.className="sunflower";
 s.innerHTML="🌻";
@@ -243,16 +256,18 @@ setTimeout(()=>s.remove(),6000);
 }
 
 /* SI */
-document.getElementById("si").addEventListener("click", ()=>{
+siBtn.addEventListener("click", ()=>{
 
 document.getElementById("finalText").style.display="block";
+document.getElementById("extraText").style.display="block";
+
 document.getElementById("scene3").classList.add("zoom");
 
-document.getElementById("si").style.display="none";
-document.getElementById("no").style.display="none";
+siBtn.style.display="none";
+noBtn.style.display="none";
 
 /* lluvia intensa */
-setInterval(lluviaRomantica,600);
+setInterval(lluvia,600);
 
 });
 
