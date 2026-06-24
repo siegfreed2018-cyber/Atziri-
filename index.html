@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -6,79 +6,137 @@
 <title>Para Atziri ❤️</title>
 
 <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-    margin:0;
-    background:linear-gradient(#ffd6e7,#fff8c6);
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    font-family:Arial, sans-serif;
+overflow:hidden;
+background:linear-gradient(to bottom,#020111,#191970);
+font-family:'Segoe UI',sans-serif;
+color:white;
+height:100vh;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+animation:brillar 2s infinite alternate;
+}
+
+@keyframes brillar{
+from{opacity:.2}
+to{opacity:1}
+}
+
+.luna{
+position:absolute;
+top:60px;
+right:120px;
+width:120px;
+height:120px;
+background:#fff;
+border-radius:50%;
+box-shadow:0 0 60px white;
 }
 
 .contenedor{
-    text-align:center;
-    z-index:2;
-}
-
-.corazon{
-    font-size:120px;
-    animation:latido 1s infinite;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
 }
 
 h1{
-    color:#d1005d;
-    font-size:40px;
-    text-shadow:2px 2px 5px white;
+font-size:60px;
+margin-bottom:20px;
+animation:aparecer 2s;
 }
 
-.flor,.mariposa{
-    position:absolute;
-    font-size:40px;
-    animation:flotar 8s linear infinite;
+h2{
+font-size:30px;
+color:#ffd1dc;
 }
 
-@keyframes latido{
-    0%,100%{transform:scale(1);}
-    50%{transform:scale(1.2);}
+#texto{
+margin-top:40px;
+font-size:25px;
+min-height:60px;
 }
 
-@keyframes flotar{
-    from{
-        transform:translateY(100vh);
-    }
-    to{
-        transform:translateY(-100px);
-    }
+button{
+margin-top:40px;
+padding:15px 40px;
+border:none;
+border-radius:50px;
+font-size:20px;
+background:#ff4d88;
+color:white;
+cursor:pointer;
+transition:.4s;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+@keyframes aparecer{
+from{
+opacity:0;
+transform:translateY(-50px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 </style>
 </head>
 <body>
 
+<div class="luna"></div>
+
 <div class="contenedor">
-    <div class="corazon">❤️</div>
-    <h1>Atziri Danae Garduño Caballero<br>¿Te quieres casar conmigo? 💍</h1>
+<h1>Hola, amor ❤️</h1>
+
+<h2>Atziri Danae Garduño Caballero</h2>
+
+<div id="texto"></div>
+
+<button>Continuar ✨</button>
 </div>
 
 <script>
-for(let i=0;i<20;i++){
-    let flor=document.createElement("div");
-    flor.className="flor";
-    flor.innerHTML="🌻";
-    flor.style.left=Math.random()*100+"%";
-    flor.style.animationDuration=(5+Math.random()*5)+"s";
-    document.body.appendChild(flor);
+
+// estrellas
+for(let i=0;i<300;i++){
+let star=document.createElement("div");
+star.className="star";
+star.style.left=Math.random()*100+"vw";
+star.style.top=Math.random()*100+"vh";
+document.body.appendChild(star);
 }
 
-for(let i=0;i<15;i++){
-    let mariposa=document.createElement("div");
-    mariposa.className="mariposa";
-    mariposa.innerHTML="🦋";
-    mariposa.style.left=Math.random()*100+"%";
-    mariposa.style.animationDuration=(6+Math.random()*4)+"s";
-    document.body.appendChild(mariposa);
+// texto escribiéndose
+const mensaje="Quiero mostrarte algo muy especial...";
+let i=0;
+
+function escribir(){
+if(i<mensaje.length){
+document.getElementById("texto").innerHTML+=mensaje.charAt(i);
+i++;
+setTimeout(escribir,80);
 }
+}
+
+escribir();
+
 </script>
 
 </body>
