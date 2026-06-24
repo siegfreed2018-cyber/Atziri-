@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para Atziri ❤️</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
 *{
 margin:0;
@@ -15,9 +17,9 @@ box-sizing:border-box;
 body{
 overflow:hidden;
 height:100vh;
-font-family:'Segoe UI',sans-serif;
-color:white;
 background:radial-gradient(circle at top,#1b1b4f,#020111);
+color:white;
+font-family:'Segoe UI', sans-serif;
 }
 
 /* estrellas */
@@ -40,7 +42,7 @@ to{transform:scale(1.8); opacity:1;}
 .luna{
 position:absolute;
 top:50px;
-right:100px;
+right:80px;
 width:120px;
 height:120px;
 background:#fff;
@@ -48,7 +50,7 @@ border-radius:50%;
 box-shadow:0 0 80px white;
 }
 
-/* contenedores */
+/* escenas */
 .scene{
 position:absolute;
 top:50%;
@@ -66,19 +68,24 @@ opacity:1;
 pointer-events:auto;
 }
 
-/* textos */
-h1{font-size:52px;}
-h2{font-size:22px;color:#ffd1dc;margin-top:10px;}
+/* textos elegantes */
+h1,h2,#finalText{
+font-family:'Great Vibes', cursive;
+text-align:center;
+}
 
-#texto{
-margin-top:25px;
-font-size:22px;
-min-height:60px;
+h1{font-size:60px;}
+h2{font-size:30px;color:#ffd1dc;margin-top:10px;}
+
+#finalText{
+font-size:36px;
+margin-top:20px;
+display:none;
 }
 
 /* botones */
 button{
-padding:12px 30px;
+padding:12px 35px;
 border:none;
 border-radius:40px;
 font-size:18px;
@@ -87,7 +94,7 @@ transition:.3s;
 margin-top:20px;
 }
 
-#continuar, #si{
+#continuar,#continuar2,#si{
 background:#ff4d88;
 color:white;
 }
@@ -98,20 +105,6 @@ color:white;
 position:absolute;
 }
 
-/* escena final */
-#finalText{
-display:none;
-font-size:30px;
-margin-top:20px;
-color:#ffb6c1;
-animation:pop 1.5s ease;
-}
-
-@keyframes pop{
-from{transform:scale(.5); opacity:0;}
-to{transform:scale(1); opacity:1;}
-}
-
 /* corazones */
 .heart{
 position:absolute;
@@ -120,20 +113,28 @@ font-size:20px;
 animation:fall linear forwards;
 }
 
-@keyframes fall{
-from{transform:translateY(-10vh); opacity:1;}
-to{transform:translateY(110vh); opacity:0;}
+/* girasoles */
+.sunflower{
+position:absolute;
+font-size:24px;
+animation:fall linear forwards;
 }
 
-/* zoom efecto */
+@keyframes fall{
+from{transform:translateY(-10vh) rotate(0deg); opacity:1;}
+to{transform:translateY(110vh) rotate(180deg); opacity:0;}
+}
+
+/* zoom final */
 .zoom{
 animation:zoomIn 2s forwards;
 }
 
 @keyframes zoomIn{
 from{transform:translate(-50%,-50%) scale(1);}
-to{transform:translate(-50%,-50%) scale(1.2);}
+to{transform:translate(-50%,-50%) scale(1.15);}
 }
+
 </style>
 </head>
 
@@ -141,35 +142,43 @@ to{transform:translate(-50%,-50%) scale(1.2);}
 
 <div class="luna"></div>
 
-<!-- ESCENA 1 -->
-<div class="scene active" id="scene1">
-<h1>Hola, amor ❤️</h1>
-<h2>Atziri Danae Garduño Caballero</h2>
-<div id="texto"></div>
-<button id="continuar">Continuar ✨</button>
-</div>
-
-<!-- ESCENA 2 -->
-<div class="scene" id="scene2">
-<h1>Atziri ❤️</h1>
-<h2>Hay algo que quiero preguntarte...</h2>
-
-<div id="finalText">Quiero casarme contigo 💍❤️</div>
-
-<button id="si">Sí 💍</button>
-<button id="no">No 💔</button>
-</div>
-
 <script>
-
-/* estrellas */
-for(let i=0;i<350;i++){
+// estrellas
+for(let i=0;i<300;i++){
 let s=document.createElement("div");
 s.className="star";
 s.style.left=Math.random()*100+"vw";
 s.style.top=Math.random()*100+"vh";
 document.body.appendChild(s);
 }
+</script>
+
+<!-- ESCENA 1 -->
+<div class="scene active" id="scene1">
+<h1>Hola, amor ❤️</h1>
+<h2>Atziri Danae Garduño Caballero</h2>
+
+<div id="texto"></div>
+<button id="continuar">Continuar ✨</button>
+</div>
+
+<!-- ESCENA 2 -->
+<div class="scene" id="scene2">
+<h2>Quiero preguntarte algo...</h2>
+<button id="continuar2">Continuar ✨</button>
+</div>
+
+<!-- ESCENA 3 -->
+<div class="scene" id="scene3">
+<h2>¿Quieres casarte conmigo? 💍</h2>
+
+<div id="finalText">Quiero casarme contigo ❤️💍</div>
+
+<button id="si">Sí 💍</button>
+<button id="no">No 💔</button>
+</div>
+
+<script>
 
 /* texto escena 1 */
 const msg="Quiero mostrarte algo muy especial...";
@@ -184,13 +193,23 @@ setTimeout(escribir,70);
 }
 escribir();
 
-/* cambio de escena */
+/* escenas */
+function showScene(id){
+document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+/* continuar */
 document.getElementById("continuar").addEventListener("click", ()=>{
-document.getElementById("scene1").classList.remove("active");
-document.getElementById("scene2").classList.add("active");
+showScene("scene2");
 });
 
-/* botón NO que huye */
+/* continuar 2 */
+document.getElementById("continuar2").addEventListener("click", ()=>{
+showScene("scene3");
+});
+
+/* NO que huye */
 const noBtn = document.getElementById("no");
 
 noBtn.addEventListener("mouseover", ()=>{
@@ -198,34 +217,43 @@ noBtn.style.left = Math.random()*80 + "vw";
 noBtn.style.top = Math.random()*80 + "vh";
 });
 
-/* corazones lluvia */
-function lluviaCorazones(){
-for(let i=0;i<40;i++){
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(2+Math.random()*3)+"s";
-document.body.appendChild(heart);
+/* CORAZONES + GIRASOLES */
+function lluviaRomantica(){
 
-setTimeout(()=>heart.remove(),5000);
-}
+for(let i=0;i<12;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(2+Math.random()*3)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
 }
 
-/* botón SI */
+for(let i=0;i<6;i++){
+let s=document.createElement("div");
+s.className="sunflower";
+s.innerHTML="🌻";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDuration=(3+Math.random()*3)+"s";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),6000);
+}
+
+}
+
+/* SI */
 document.getElementById("si").addEventListener("click", ()=>{
 
 document.getElementById("finalText").style.display="block";
+document.getElementById("scene3").classList.add("zoom");
 
-/* zoom cinematográfico */
-document.getElementById("scene2").classList.add("zoom");
-
-/* lluvia de corazones */
-setInterval(lluviaCorazones,800);
-
-/* esconder botones */
 document.getElementById("si").style.display="none";
 document.getElementById("no").style.display="none";
+
+/* lluvia intensa */
+setInterval(lluviaRomantica,600);
+
 });
 
 </script>
