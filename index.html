@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Atziri ❤️</title>
+
+<style>
+body{
+    margin:0;
+    background:linear-gradient(#ffd6e7,#fff8c6);
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial, sans-serif;
+}
+
+.contenedor{
+    text-align:center;
+    z-index:2;
+}
+
+.corazon{
+    font-size:120px;
+    animation:latido 1s infinite;
+}
+
+h1{
+    color:#d1005d;
+    font-size:40px;
+    text-shadow:2px 2px 5px white;
+}
+
+.flor,.mariposa{
+    position:absolute;
+    font-size:40px;
+    animation:flotar 8s linear infinite;
+}
+
+@keyframes latido{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+}
+
+@keyframes flotar{
+    from{
+        transform:translateY(100vh);
+    }
+    to{
+        transform:translateY(-100px);
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="contenedor">
+    <div class="corazon">❤️</div>
+    <h1>Atziri Danae Garduño Caballero<br>¿Te quieres casar conmigo? 💍</h1>
+</div>
+
+<script>
+for(let i=0;i<20;i++){
+    let flor=document.createElement("div");
+    flor.className="flor";
+    flor.innerHTML="🌻";
+    flor.style.left=Math.random()*100+"%";
+    flor.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(flor);
+}
+
+for(let i=0;i<15;i++){
+    let mariposa=document.createElement("div");
+    mariposa.className="mariposa";
+    mariposa.innerHTML="🦋";
+    mariposa.style.left=Math.random()*100+"%";
+    mariposa.style.animationDuration=(6+Math.random()*4)+"s";
+    document.body.appendChild(mariposa);
+}
+</script>
+
+</body>
+</html>
