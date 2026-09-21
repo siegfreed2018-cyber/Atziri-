@@ -7,30 +7,19 @@
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Pantalla inicial para activar audio -->
+  <!-- Pantalla inicial para iniciar experiencia y audio -->
   <div id="overlay" class="overlay">
     <div class="overlay-content">
-      <p>Toca para abrir 💛</p>
+      <p>Toca para iniciar 💛</p>
       <div class="emoji" aria-hidden="true">🌻</div>
     </div>
   </div>
 
-  <!-- Contenedor de la Notita con Nombre Personalizado -->
-  <div id="card-container" class="card-container hidden">
-    <div id="card" class="card">
-      <div class="tape"></div>
-      <h2>Para: <span id="nombre-persona">ATZIRI DANAE GARDUÑO CABALLERO</span> 💛</h2>
-      <hr class="divider">
-      <p id="card-message">Toca esta notita para leer el mensaje...</p>
-      <span class="tap-hint">👇 Toca aquí</span>
-    </div>
-  </div>
-
-  <!-- Canvas para la animación 3D -->
+  <!-- Lienzo Canvas 3D para toda la pantalla -->
   <canvas id="canvas"></canvas>
 
   <!-- Audio de fondo -->
