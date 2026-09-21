@@ -1,277 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Atziri ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-overflow:hidden;
-height:100vh;
-background:radial-gradient(circle at top,#1b1b4f,#020111);
-color:white;
-font-family:'Segoe UI', sans-serif;
-}
-
-/* estrellas */
-.star{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-border-radius:50%;
-animation:twinkle 2s infinite alternate;
-opacity:.7;
-}
-
-@keyframes twinkle{
-from{transform:scale(1); opacity:.3;}
-to{transform:scale(1.8); opacity:1;}
-}
-
-/* cielo nombre */
-.sky-name{
-position:absolute;
-top:20px;
-width:100%;
-text-align:center;
-font-family:'Great Vibes', cursive;
-font-size:28px;
-color:#ffd1dc;
-text-shadow:0 0 15px #ff4d88;
-}
-
-/* escenas */
-.scene{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
-width:90%;
-opacity:0;
-pointer-events:none;
-transition:opacity 1.2s ease;
-}
-
-.scene.active{
-opacity:1;
-pointer-events:auto;
-}
-
-/* textos */
-h1,h2,#finalText,#extraText{
-font-family:'Great Vibes', cursive;
-text-align:center;
-}
-
-h1{font-size:60px;}
-h2{font-size:30px;color:#ffd1dc;margin-top:10px;}
-
-#finalText{
-font-size:36px;
-margin-top:20px;
-display:none;
-}
-
-#extraText{
-font-size:30px;
-margin-top:15px;
-display:none;
-color:#ffb6c1;
-}
-
-/* botones */
-button{
-padding:12px 35px;
-border:none;
-border-radius:40px;
-font-size:18px;
-cursor:pointer;
-transition:.3s;
-margin-top:20px;
-}
-
-#continuar,#continuar2,#si{
-background:#ff4d88;
-color:white;
-}
-
-#no{
-background:#444;
-color:white;
-position:absolute;
-}
-
-/* corazones */
-.heart{
-position:absolute;
-color:pink;
-font-size:20px;
-animation:fall linear forwards;
-}
-
-/* girasoles */
-.sunflower{
-position:absolute;
-font-size:24px;
-animation:fall linear forwards;
-}
-
-@keyframes fall{
-from{transform:translateY(-10vh) rotate(0deg); opacity:1;}
-to{transform:translateY(110vh) rotate(180deg); opacity:0;}
-}
-
-/* zoom */
-.zoom{
-animation:zoomIn 2s forwards;
-}
-
-@keyframes zoomIn{
-from{transform:translate(-50%,-50%) scale(1);}
-to{transform:translate(-50%,-50%) scale(1.15);}
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Atziri Danae 💛</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<div class="sky-name">Atziri ❤️ Tú</div>
+  <!-- Pantalla inicial para activar audio -->
+  <div id="overlay" class="overlay">
+    <div class="overlay-content">
+      <p>Toca para abrir 💛</p>
+      <div class="emoji" aria-hidden="true">🌻</div>
+    </div>
+  </div>
 
-<script>
-// estrellas
-for(let i=0;i<300;i++){
-let s=document.createElement("div");
-s.className="star";
-s.style.left=Math.random()*100+"vw";
-s.style.top=Math.random()*100+"vh";
-document.body.appendChild(s);
-}
-</script>
+  <!-- Contenedor de la Notita con Nombre Personalizado -->
+  <div id="card-container" class="card-container hidden">
+    <div id="card" class="card">
+      <div class="tape"></div>
+      <h2>Para: <span id="nombre-persona">ATZIRI DANAE GARDUÑO CABALLERO</span> 💛</h2>
+      <hr class="divider">
+      <p id="card-message">Toca esta notita para leer el mensaje...</p>
+      <span class="tap-hint">👇 Toca aquí</span>
+    </div>
+  </div>
 
-<!-- ESCENA 1 -->
-<div class="scene active" id="scene1">
-<h1>Hola, amor ❤️</h1>
-<h2>Atziri Danae Garduño Caballero</h2>
+  <!-- Canvas para la animación 3D -->
+  <canvas id="canvas"></canvas>
 
-<div id="texto"></div>
-<button id="continuar">Continuar ✨</button>
-</div>
+  <!-- Audio de fondo -->
+  <audio id="audio" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-<!-- ESCENA 2 -->
-<div class="scene" id="scene2">
-<h2>Quiero preguntarte algo...</h2>
-<button id="continuar2">Continuar ✨</button>
-</div>
-
-<!-- ESCENA 3 -->
-<div class="scene" id="scene3">
-<h2>¿Quieres casarte conmigo? 💍</h2>
-
-<div id="finalText">Quiero casarme contigo ❤️💍</div>
-<div id="extraText">Sabía que querías 🤣</div>
-
-<button id="si">Sí 💍</button>
-<button id="no">No 💔</button>
-</div>
-
-<script>
-
-/* texto intro */
-const msg="Quiero mostrarte algo muy especial...";
-let i=0;
-
-function escribir(){
-if(i<msg.length){
-document.getElementById("texto").innerHTML+=msg.charAt(i);
-i++;
-setTimeout(escribir,70);
-}
-}
-escribir();
-
-/* escenas */
-function showScene(id){
-document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-}
-
-document.getElementById("continuar").addEventListener("click", ()=>{
-showScene("scene2");
-});
-
-document.getElementById("continuar2").addEventListener("click", ()=>{
-showScene("scene3");
-});
-
-/* NO que huye + hace crecer SI */
-const noBtn = document.getElementById("no");
-const siBtn = document.getElementById("si");
-
-noBtn.addEventListener("mouseover", ()=>{
-
-noBtn.style.left = Math.random()*80 + "vw";
-noBtn.style.top = Math.random()*80 + "vh";
-
-/* el SI crece */
-let size = parseFloat(window.getComputedStyle(siBtn).fontSize);
-siBtn.style.fontSize = (size + 1) + "px";
-siBtn.style.transform = "scale(1.05)";
-});
-
-/* lluvia romántica */
-function lluvia(){
-
-for(let i=0;i<10;i++){
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(2+Math.random()*3)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),5000);
-}
-
-for(let i=0;i<5;i++){
-let s=document.createElement("div");
-s.className="sunflower";
-s.innerHTML="🌻";
-s.style.left=Math.random()*100+"vw";
-s.style.animationDuration=(3+Math.random()*3)+"s";
-document.body.appendChild(s);
-setTimeout(()=>s.remove(),6000);
-}
-
-}
-
-/* SI */
-siBtn.addEventListener("click", ()=>{
-
-document.getElementById("finalText").style.display="block";
-document.getElementById("extraText").style.display="block";
-
-document.getElementById("scene3").classList.add("zoom");
-
-siBtn.style.display="none";
-noBtn.style.display="none";
-
-/* lluvia intensa */
-setInterval(lluvia,600);
-
-});
-
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
