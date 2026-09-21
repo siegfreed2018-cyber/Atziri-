@@ -1,20 +1,7 @@
 const overlay = document.getElementById('overlay');
-const cardContainer = document.getElementById('card-container');
-const card = document.getElementById('card');
-const messageElement = document.getElementById('card-message');
 const audio = document.getElementById('audio');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
-const mensajes = [
-  "¡Espero que tengas un excelente día! 🌻",
-  "Recuerda que eres una persona maravillosa y súper especial. ✨",
-  "Nunca dejes de sonreír ni de luchar por tus sueños. 🚀",
-  "Gracias por alegrar cada momento con tu presencia. 💛",
-  "¡Mucho éxito en todo lo que hagas hoy! 🌟"
-];
-
-let indiceMensaje = 0;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -24,28 +11,19 @@ window.addEventListener('resize', () => {
   canvas.height = window.innerHeight;
 });
 
+// Iniciar animación y música al tocar la pantalla
 overlay.addEventListener('click', () => {
-  audio.play().catch(err => console.log("Audio no pudo iniciar: ", err));
+  audio.play().catch(err => console.log("Audio play error: ", err));
   overlay.style.display = 'none';
-  cardContainer.classList.remove('hidden');
   initMorphingParticles();
   animate();
 });
 
-card.addEventListener('click', () => {
-  messageElement.style.opacity = '0';
-  setTimeout(() => {
-    indiceMensaje = (indiceMensaje + 1) % mensajes.length;
-    messageElement.textContent = mensajes[indiceMensaje];
-    messageElement.style.opacity = '1';
-  }, 200);
-});
-
 // --- LÓGICA DE PARTÍCULAS 3D (Girasol -> Corazón -> DANAE) ---
 let particles = [];
-const particleCount = 800;
+const particleCount = 900;
 let currentShape = 0;
-const intervaloCambio = 4000; // Cambia cada 4 segundos
+const intervaloCambio = 4000; // Cambia de forma cada 4 segundos
 
 class Particle {
   constructor() {
@@ -87,7 +65,7 @@ class Particle {
     const projY = (this.y * scale) + (canvas.height / 2);
 
     const alpha = Math.max(0.2, (this.z + 300) / 600);
-    const size = Math.max(1, scale * 2.2);
+    const size = Math.max(1.2, scale * 2.5);
 
     ctx.beginPath();
     ctx.arc(projX, projY, size, 0, Math.PI * 2);
@@ -96,10 +74,10 @@ class Particle {
   }
 }
 
-// 1. Puntos de Girasol
+// 1. Girasol (Espiral de Fibonacci)
 function getSunflowerPoint(i, total) {
   const phi = (1 + Math.sqrt(5)) / 2;
-  const radius = Math.sqrt(i / total) * 180;
+  const radius = Math.sqrt(i / total) * 200;
   const theta = i * 2 * Math.PI * phi;
 
   return {
@@ -110,10 +88,10 @@ function getSunflowerPoint(i, total) {
   };
 }
 
-// 2. Puntos de Corazón
+// 2. Corazón 3D
 function getHeartPoint(i, total) {
   const t = (i / total) * Math.PI * 2;
-  const scale = 10;
+  const scale = 11;
   
   const x = 16 * Math.pow(Math.sin(t), 3);
   const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
@@ -127,28 +105,28 @@ function getHeartPoint(i, total) {
   };
 }
 
-// 3. Puntos del texto DANAE
+// 3. Texto DANAE
 function getDanaePoints(total) {
   const tempCanvas = document.createElement('canvas');
   const tempCtx = tempCanvas.getContext('2d');
-  tempCanvas.width = 400;
+  tempCanvas.width = 450;
   tempCanvas.height = 150;
 
-  tempCtx.font = 'bold 70px sans-serif';
+  tempCtx.font = 'bold 80px sans-serif';
   tempCtx.fillStyle = 'white';
   tempCtx.textAlign = 'center';
-  tempCtx.fillText('DANAE', 200, 90);
+  tempCtx.fillText('DANAE', 225, 95);
 
-  const imgData = tempCtx.getImageData(0, 0, 400, 150);
+  const imgData = tempCtx.getImageData(0, 0, 450, 150);
   const validPixels = [];
 
   for (let y = 0; y < 150; y += 3) {
-    for (let x = 0; x < 400; x += 3) {
-      const alpha = imgData.data[(y * 400 + x) * 4 + 3];
+    for (let x = 0; x < 450; x += 3) {
+      const alpha = imgData.data[(y * 450 + x) * 4 + 3];
       if (alpha > 128) {
         validPixels.push({
-          x: (x - 200) * 1.2,
-          y: (y - 75) * 1.2,
+          x: (x - 225) * 1.3,
+          y: (y - 75) * 1.3,
           z: (Math.random() - 0.5) * 40,
           color: '255, 220, 100'
         });
